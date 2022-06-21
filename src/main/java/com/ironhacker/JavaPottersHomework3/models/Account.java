@@ -3,6 +3,7 @@ package com.ironhacker.JavaPottersHomework3.models;
 import com.ironhacker.JavaPottersHomework3.enums.IndustryEnum;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Account {
@@ -14,9 +15,16 @@ public class Account {
     private int employeeAccount;
     private String city;
     private String country;
-    /*private List<Contact> contactList;
-    private List<Opportunity> opportunityList;*/
+    //private List<Contact> contactList;
+    //private List<Opportunity> opportunityList;
     //private String companyName;
+
+    /*public void addContact(Contact contact){
+        contactList.add(contact);
+    }
+    public void addOpportunity(Opportunity opportunity){
+        opportunityList.add(opportunity);
+    }*/
 
 
     public Account() {
