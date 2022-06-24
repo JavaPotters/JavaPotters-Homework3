@@ -8,11 +8,11 @@ import java.util.Objects;
 public class Lead {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int id;
-    protected String name;
-    protected int phoneNumber;
-    protected String email;
-    protected String companyName;
+    private int id;
+    private String name;
+    private int phoneNumber;
+    private String email;
+    private String companyName;
 
     public Lead() {
     }

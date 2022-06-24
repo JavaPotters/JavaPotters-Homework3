@@ -45,6 +45,7 @@ public class MainMenu {
 
         while (true) {
             Optional<Opportunity> optionalOpportunity;
+            Optional<Lead> optionalLead;
             System.out.println("\nWhat do you want to do, " + salesAssistName + "?");
             String userInput = myScanner.nextLine();
             if(isAKeyWord(userInput)){
@@ -62,10 +63,35 @@ public class MainMenu {
                             convertMethod(splited);
                             break;
                         case "lookup":
-                            id = Integer.parseInt(splited[1]);
-                            optionalOpportunity = opportunityRepository.findById(id);
-                            System.out.println(optionalOpportunity.get());
-                            break;
+                            try {
+                                String objectType = splited[1];
+                                id = Integer.parseInt(splited[2]);
+                                switch (objectType){
+                                    case "leads":
+                                        optionalLead = leadRepository.findById(id);
+                                        if(optionalLead.isPresent()){
+                                            System.out.println(optionalLead.get());
+                                        } else {
+                                            System.out.println("Not found opportunity");
+                                        }
+                                        break;
+                                    case "opportunities":
+                                        optionalOpportunity = opportunityRepository.findById(id);
+                                        if(optionalOpportunity.isPresent()){
+                                            System.out.println(optionalOpportunity.get());
+                                        } else {
+                                            System.out.println("Not found opportunity");
+                                        } break;
+                                    default:
+                                        System.out.println("Invalid option. Lookup does not have "+objectType+" option, " +
+                                                "please try again. With \033[3mLookup leads {lead_id}\033[0m " +
+                                                "or \033[3mLookup opportunities{opportunity_id}\033[0m");
+                                        break;
+                                }
+                            } catch (ArrayIndexOutOfBoundsException e){
+                                System.out.println("Invalid option. Please try again with \033[3mLookup leads {lead_id}\033[0m " +
+                                        "or \033[3mLookup opportunities{opportunity_id}\033[0m");
+                            } break;
                         case "show":
                             String objectType = splited[1];
                             if (objectType.equals("leads")) {
