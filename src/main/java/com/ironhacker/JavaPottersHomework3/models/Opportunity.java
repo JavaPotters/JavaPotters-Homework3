@@ -14,11 +14,20 @@ public class Opportunity {
     @Enumerated(EnumType.STRING)
     private ProductEnum productEnum;
     private int quantity;
-    // private Contact decisionMaker;
+    @OneToOne
+    @JoinColumn(name = "decision_maker_id")
+    private Contact decisionMaker;
     @Enumerated(EnumType.STRING)
     private StatusEnum statusEnum;
 
     public Opportunity() {
+    }
+
+    public Opportunity(ProductEnum productEnum, int quantity, Contact decisionMaker, StatusEnum statusEnum) {
+        this.productEnum = productEnum;
+        this.quantity = quantity;
+        this.decisionMaker = decisionMaker;
+        this.statusEnum = statusEnum;
     }
 
     public long getId() {
@@ -74,5 +83,8 @@ public class Opportunity {
     @Override
     public int hashCode() {
         return Objects.hash(id, productEnum, quantity, statusEnum);
+    }
+
+    public void setStatus(StatusEnum closedLost) {
     }
 }

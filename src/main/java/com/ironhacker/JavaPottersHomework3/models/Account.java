@@ -3,38 +3,36 @@ package com.ironhacker.JavaPottersHomework3.models;
 import com.ironhacker.JavaPottersHomework3.enums.IndustryEnum;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
+
+    private String companyName;
     @Enumerated(EnumType.STRING)
     private IndustryEnum industryEnum;
     private int employeeAccount;
     private String city;
     private String country;
-    //private List<Contact> contactList;
-    //private List<Opportunity> opportunityList;
-    //private String companyName;
-
-    /*public void addContact(Contact contact){
-        contactList.add(contact);
-    }
-    public void addOpportunity(Opportunity opportunity){
-        opportunityList.add(opportunity);
-    }*/
-
 
     public Account() {
     }
 
-    public long getId() {
+    public Account(String companyName, IndustryEnum industryEnum, int employeeAccount, String city, String country) {
+        this.companyName = companyName;
+        this.industryEnum = industryEnum;
+        this.employeeAccount = employeeAccount;
+        this.city = city;
+        this.country = country;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -69,12 +67,12 @@ public class Account {
     public void setCountry(String country) {
         this.country = country;
     }
-    /*
+
     public String getCompanyName() {
         return companyName;
     }
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
-    }*/
+    }
 }

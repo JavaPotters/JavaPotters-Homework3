@@ -8,27 +8,27 @@ import java.util.Objects;
 public class Lead {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected int id;
     protected String name;
-    protected long phoneNumber;
+    protected int phoneNumber;
     protected String email;
     protected String companyName;
 
     public Lead() {
     }
 
-    public Lead(String name, long phoneNumber, String email, String companyName) {
+    public Lead(String name, int phoneNumber, String email, String companyName) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.companyName = companyName;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -40,11 +40,11 @@ public class Lead {
         this.name = name;
     }
 
-    public long getPhoneNumber() {
+    public int getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
