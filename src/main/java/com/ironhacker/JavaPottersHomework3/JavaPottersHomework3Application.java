@@ -8,6 +8,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.logging.Logger;
 
 @SpringBootApplication
+public class JavaPottersHomework3Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(JavaPottersHomework3Application.class, args);
+	}
+
+}
+
+/*@SpringBootApplication
 public class JavaPottersHomework3Application implements CommandLineRunner {
 	//private static Logger LOG = (Logger) LoggerFactory.getLogger(JavaPottersHomework3Application.class);
 	public static void main(String[] args) {
@@ -22,6 +31,7 @@ public class JavaPottersHomework3Application implements CommandLineRunner {
 		//LOG.info("EXECUTING : command line runner");
 		/*for (int i = 0; i < args.length; ++i) {
 			LOG.info("args[{}]: {}", i, args[i]);
-		}*/
+		}
 	}
-}
+			}
+			*/

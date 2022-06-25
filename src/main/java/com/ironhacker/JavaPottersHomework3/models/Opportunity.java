@@ -20,6 +20,14 @@ public class Opportunity {
     @Enumerated(EnumType.STRING)
     private StatusEnum statusEnum;
 
+    @ManyToOne
+    @JoinColumn(name = "sales_rep_id")
+    private SalesRep salesRepAssociate;
+
+    @OneToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     public Opportunity() {
     }
 

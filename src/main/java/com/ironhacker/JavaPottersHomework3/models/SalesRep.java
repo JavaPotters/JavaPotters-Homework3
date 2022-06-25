@@ -1,9 +1,7 @@
 package com.ironhacker.JavaPottersHomework3.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class SalesRep {
@@ -11,6 +9,12 @@ public class SalesRep {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    @OneToMany(mappedBy = "salesRep")
+    private List<Lead> leadList;
+
+    @OneToMany(mappedBy = "salesRepAssociate")
+    private List<Opportunity> opportunityList;
 
     public SalesRep() {
     }

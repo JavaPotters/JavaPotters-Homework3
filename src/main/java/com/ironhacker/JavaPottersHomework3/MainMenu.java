@@ -3,18 +3,16 @@ package com.ironhacker.JavaPottersHomework3;
 import com.ironhacker.JavaPottersHomework3.enums.IndustryEnum;
 import com.ironhacker.JavaPottersHomework3.enums.ProductEnum;
 import com.ironhacker.JavaPottersHomework3.enums.StatusEnum;
-import com.ironhacker.JavaPottersHomework3.models.Account;
-import com.ironhacker.JavaPottersHomework3.models.Contact;
-import com.ironhacker.JavaPottersHomework3.models.Lead;
-import com.ironhacker.JavaPottersHomework3.models.Opportunity;
+import com.ironhacker.JavaPottersHomework3.models.*;
 import com.ironhacker.JavaPottersHomework3.repository.*;
+import com.ironhacker.JavaPottersHomework3.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-import static com.ironhacker.JavaPottersHomework3.utils.utils.*;
+import static com.ironhacker.JavaPottersHomework3.utils.Utils.*;
 import static com.ironhacker.JavaPottersHomework3.utils.Constants.*;
 
 public class MainMenu {
@@ -32,6 +30,9 @@ public class MainMenu {
     @Autowired
     private ContactRepository contactRepository;
 
+    @Autowired
+    private Utils utils;
+
 
     public void main() {
 
@@ -48,7 +49,7 @@ public class MainMenu {
             Optional<Lead> optionalLead;
             System.out.println("\nWhat do you want to do, " + salesAssistName + "?");
             String userInput = myScanner.nextLine();
-            if(isAKeyWord(userInput)){
+            if(utils.isAKeyWord(userInput)){
                 userInput = userInput.toLowerCase();
                 int id;
                 try{
@@ -56,7 +57,7 @@ public class MainMenu {
                     String keyword = splited[0].toLowerCase(); // ignore mayus, always lowerCase
                     switch (keyword){
                         case "signup":
-                            Lead lead = signingUp();
+                            Lead lead = utils.signingUp();
                             leadRepository.save(lead);
                             break;
                         case "convert":
@@ -95,9 +96,9 @@ public class MainMenu {
                         case "show":
                             String objectType = splited[1];
                             if (objectType.equals("leads")) {
-                                leadRepository.showLead();
+                                utils.showLead();
                             } else if (objectType.equals("opportunities")) {
-                                opportunityRepository.showOpportunies();
+                                utils.showOpportunities();
                             } else{
                                 System.out.println("Invalid option. Show does not have "+objectType+" option, please " +
                                         "try again. With \033[3mshow leads\033[0m or \033[3mshow opportunities\033[0m");
@@ -124,6 +125,48 @@ public class MainMenu {
                                 System.out.println("Not found opportunity");
                             }
                             break;
+                        case "report":
+                            List<SalesRep> salesReps;
+                            String objectReport =splited[1];
+                            switch (objectReport){
+                                case "lead":
+                                    salesReps = salesRepRepository.findAll();
+                                    for(SalesRep salesRep: salesReps){
+                                        System.out.println(salesRep.getName());
+                                        System.out.println(leadRepository.findBySalesRep(salesRep.getId()).size());
+                                    }
+                                    break;
+                                case "opportunity":
+                                    String objectReport2 = splited[3];
+                                    switch (objectReport2){
+                                        case "salesrep":
+                                            salesReps = salesRepRepository.findAll();
+                                            for(SalesRep salesRep: salesReps){
+                                                System.out.println(salesRep.getName());
+                                                System.out.println(opportunityRepository.findBySalesRepAssociate(salesRep).size());
+                                            }
+                                            break;
+                                        case "the":
+                                            if(splited[4].equals("product")){
+                                                for(ProductEnum productEnum: ProductEnum.values()){
+                                                    System.out.println(productEnum);
+                                                    System.out.println(opportunityRepository.findByProductEnum(productEnum));
+                                                }
+                                            } else {
+                                                System.out.println("Invalid option. Please try again");
+                                            } break;
+                                        case "country":
+                                            //List<String> countries = opportunityRepository.findBy
+
+                                            break;
+                                        case "city":
+                                            break;
+                                        case "industry":
+                                            break;
+                                    }
+
+                            }
+
                         case "exit":
                             System.exit(0);
                     }
@@ -149,16 +192,17 @@ public class MainMenu {
 
         Contact contact = new Contact(optionalLead.get().getName(),
                 optionalLead.get().getPhoneNumber(),
-                optionalLead.get().getEmail());
+                optionalLead.get().getEmail(),
+                optionalLead.get().getCompanyName());
         contactRepository.save(contact);
 
-        int productQuantity = validInput("How many trucks does the lead want?");
+        int productQuantity = utils.validInput("How many trucks does the lead want?");
 
         ProductEnum productEnum = null;
         int productTypeInt;
         //Validation productType
         do{
-            productTypeInt = validInput("\nWhich of our products? \n" +
+            productTypeInt = utils.validInput("\nWhich of our products? \n" +
                     "1. HYBRID,\n" + "2. FLATBED,\n" + "3. BOX");
             switch (productTypeInt){
                 case 1:
@@ -190,7 +234,7 @@ public class MainMenu {
                 IndustryEnum industryEnum = null;
                 //Validation industryType
                 do{
-                    industryTypeInt = validInput("\nWhich industry are the products for? \n" +
+                    industryTypeInt = utils.validInput("\nWhich industry are the products for? \n" +
                             "1. PRODUCE\n" + "2. ECOMMERCE\n" + "3. MANUFACTURING\n" + "4. MEDICAL\n" +
                             "5. OTHER");
                     switch (industryTypeInt){
@@ -215,25 +259,25 @@ public class MainMenu {
                     }
                 }while (industryTypeInt > 5);
 
-                int numEmployees = validInput("\nHow many employees does the contact's company have?");
-                List<String> companyData = getInputData(
+                int numEmployees = utils.validInput("\nHow many employees does the contact's company have?");
+                List<String> companyData = utils.getInputData(
                         "\nIntroduce the city where the contact's company is located.",
                         "\nIntroduce the country where the contact's company is located.");
 
                 Account account = new Account(optionalLead.get().getCompanyName(),
                         industryEnum, numEmployees,
                         companyData.get(0), companyData.get(1));
-                contact.setCompany(account);
+                //contact.setCompany(account);
                 accountRepository.save(account);
 
             }
             else if (userInput.equals("N")) {
                 while (true){
                     // preguntar id de account
-                    int accountId = validInput("\nPlease insert account ID");
+                    int accountId = utils.validInput("\nPlease insert account ID");
                     Optional<Account> optionalAccount = accountRepository.findById(accountId);
                     if(optionalAccount.isPresent()){
-                        contact.setCompany(optionalAccount.get());
+                        //contact.setCompany(optionalAccount.get());
                         break;
                     } else {
                         System.out.println("Not found this account");

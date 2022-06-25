@@ -17,6 +17,9 @@ public class Account {
     private String city;
     private String country;
 
+    @OneToOne(mappedBy = "account")
+    private Opportunity opportunity;
+
     public Account() {
     }
 

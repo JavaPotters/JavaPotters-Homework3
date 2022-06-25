@@ -13,5 +13,6 @@ public class Constants {
             "\033[3m- Exit:\033[0m to finish the program.";
 
     // Key words to enter in the switch-case
-    public static final String[] keyWords = {"convert", "lookup", "close-lost", "close-won", "show", "signup", "exit"};
+    public static final String[] keyWords = {"convert", "lookup", "close-lost", "close-won", "show",
+            "signup", "exit", "report"};
 }

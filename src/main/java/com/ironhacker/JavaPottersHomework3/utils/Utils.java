@@ -2,6 +2,9 @@ package com.ironhacker.JavaPottersHomework3.utils;
 
 import com.ironhacker.JavaPottersHomework3.models.Lead;
 import com.ironhacker.JavaPottersHomework3.models.Opportunity;
+import com.ironhacker.JavaPottersHomework3.repository.LeadRepository;
+import com.ironhacker.JavaPottersHomework3.repository.OpportunityRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -10,9 +13,9 @@ import java.util.Scanner;
 
 import static com.ironhacker.JavaPottersHomework3.utils.Constants.keyWords;
 
-public class utils {
+public class Utils {
     // read questions, and return a list of strings
-    public static List<String> getInputData(String... questions) {
+    public List<String> getInputData(String... questions) {
         Scanner scanner = new Scanner(System.in);
         List<String> inputData = new ArrayList<>();
         for (String question : questions) {
@@ -23,7 +26,7 @@ public class utils {
     }
 
     // valid if the user's input is a int
-    public static int validInput(String questions){
+    public int validInput(String questions){
         Scanner myScanner =  new Scanner(System.in);
         int input = 0;
 
@@ -39,7 +42,7 @@ public class utils {
         return input;
     }
 
-    public static Lead signingUp() {
+    public Lead signingUp() {
 
         List<String> name = getInputData("\nIntroduce the lead's name: ");
         Integer phoneNumber = validInput("\nIntroduce the lead's phone number: ");
@@ -51,7 +54,7 @@ public class utils {
     }
 
     // valid if a string is a keyword
-    public static boolean isAKeyWord(String str){
+    public boolean isAKeyWord(String str){
         String[] splited = str.split(" ");
         String word = splited[0].toLowerCase();
         for(String keyWord: keyWords){
@@ -60,6 +63,27 @@ public class utils {
             }
         }
         return false;
+    }
+
+    @Autowired
+    private LeadRepository leadRepository;
+    public void showLead(){
+        System.out.println("List of leads: ");
+        List<Lead> leadList = leadRepository.findAll();
+        for(Lead lead: leadList){
+            System.out.println(lead);
+        }
+    }
+
+    @Autowired
+    private OpportunityRepository opportunityRepository;
+
+    public void showOpportunities(){
+        System.out.println("List of opportunities: ");
+        List<Opportunity> opportunityList = opportunityRepository.findAll();
+        for(Opportunity opportunity: opportunityList){
+            System.out.println(opportunity);
+        }
     }
 
 

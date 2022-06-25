@@ -5,6 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "lead_table")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Lead {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +14,10 @@ public class Lead {
     private int phoneNumber;
     private String email;
     private String companyName;
+
+    @ManyToOne
+    @JoinColumn(name = "sales_rep_id")
+    private SalesRep salesRep;
 
     public Lead() {
     }
