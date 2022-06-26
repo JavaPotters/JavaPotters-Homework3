@@ -34,6 +34,10 @@ class AccountRepositoryTest {
     private Account account1, account2;
     private SalesRep salesRep1, salesRep2;
 
+    private List<Opportunity> opportunityList1, opportunityList2;
+
+
+
     @BeforeEach
     void setUp() {
         salesRep1 = new SalesRep("Laura");
@@ -45,6 +49,8 @@ class AccountRepositoryTest {
         contact2 = new Contact("Mike", 634477579, "mike@email.com", "Tiempost");
         account2 = new Account("Tiempost", IndustryEnum.OTHER, 205, "Montevideo", "Uruguay");
         opportunity2 = new Opportunity(ProductEnum.FLATBED, 15, contact2, StatusEnum.OPEN, salesRep2, account2);
+
+
 
         salesRepRepository.saveAll(List.of(salesRep1, salesRep2));
         contactRepository.saveAll(List.of(contact1, contact2));
@@ -134,5 +140,23 @@ class AccountRepositoryTest {
     void findEmployeeMin() {
         int result = accountRepository.findEmployeeMin();
         assertEquals(50, result);
+    }
+
+    @Test
+    void findAverageOppsByAccount() {
+        double result = accountRepository.findAverageOppsByAccount();
+        assertEquals(1.0, result );
+    }
+
+    @Test
+    void findMaxOppsByAccount() {
+        int result = accountRepository.findMaxOppsByAccount();
+        assertEquals(1, result);
+    }
+
+    @Test
+    void findMinOppsByAccount() {
+        int result = accountRepository.findMinOppsByAccount();
+        assertEquals(1, result);
     }
 }

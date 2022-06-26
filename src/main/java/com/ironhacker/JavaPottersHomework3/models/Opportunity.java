@@ -25,7 +25,7 @@ public class Opportunity {
     @JoinColumn(name = "sales_rep_id")
     private SalesRep salesRepAssociate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 

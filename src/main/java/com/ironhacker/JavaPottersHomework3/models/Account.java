@@ -3,6 +3,7 @@ package com.ironhacker.JavaPottersHomework3.models;
 import com.ironhacker.JavaPottersHomework3.enums.IndustryEnum;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Account {
@@ -17,8 +18,10 @@ public class Account {
     private String city;
     private String country;
 
-    @OneToOne(mappedBy = "account")
-    private Opportunity opportunity;
+    @OneToMany(mappedBy = "account")
+    private List<Opportunity> opportunityList;
+
+
 
     public Account() {
     }

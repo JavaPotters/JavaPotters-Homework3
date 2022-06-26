@@ -44,4 +44,22 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query("SELECT MIN(employeeAccount) FROM Account")
     int findEmployeeMin();
 
+
+   @Query(value = "SELECT AVG(count_table.id_column) FROM (SELECT a.id, COUNT(o.id) AS id_column FROM opportunity o " +
+            " JOIN account a ON a.id = o.account_id " +
+            " GROUP BY a.id) AS count_table", nativeQuery = true)
+    double findAverageOppsByAccount();
+
+
+    @Query(value = "SELECT MAX(count_table.id_column) FROM (SELECT a.id, COUNT(o.id) AS id_column FROM opportunity o " +
+            " JOIN account a ON a.id = o.account_id " +
+            " GROUP BY a.id) AS count_table", nativeQuery = true)
+    int findMaxOppsByAccount();
+
+    @Query(value = "SELECT MIN(count_table.id_column) FROM (SELECT a.id, COUNT(o.id) AS id_column FROM opportunity o " +
+            " JOIN account a ON a.id = o.account_id " +
+            " GROUP BY a.id) AS count_table", nativeQuery = true)
+    int findMinOppsByAccount();
+
 }
+

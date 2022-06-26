@@ -248,7 +248,7 @@ public class MainMenu {
                                     System.out.println("The quantity's mean is: "+ opportunityRepository.findQuantityAverage());
                                     break;
                                 case "opps":
-                                    //System.out.println("The quantity's mean is: "+ opportunityRepository);
+                                    System.out.println("The quantity's mean is: "+ accountRepository.findAverageOppsByAccount());
                                     break;
                             }
                             break;
@@ -264,7 +264,7 @@ public class MainMenu {
                                     System.out.println("The quantity's max is: "+ opportunityRepository.findQuantityMax());
                                     break;
                                 case "opps":
-                                    //System.out.println("The quantity's max is: "+ opportunityRepository);
+                                    System.out.println("The quantity's max is: "+ accountRepository.findMaxOppsByAccount());
                                     break;
                             }
                             break;
@@ -279,7 +279,7 @@ public class MainMenu {
                                     System.out.println("The quantity's min is: "+ opportunityRepository.findQuantityMin());
                                     break;
                                 case "opps":
-                                    //System.out.println("The quantity's min is: "+ opportunityRepository);
+                                    System.out.println("The quantity's min is: "+ accountRepository.findMinOppsByAccount());
                                     break;
                             }
                             break;
