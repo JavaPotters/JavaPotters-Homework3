@@ -87,4 +87,12 @@ public class Utils {
     }
 
 
+    public void showObjectList(List<Object[]>  objectList){
+        for(Object[] object: objectList){
+            System.out.println(object[0]);
+            System.out.println(object[1]);
+        }
+    }
+
+
 }

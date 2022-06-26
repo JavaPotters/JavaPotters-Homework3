@@ -55,7 +55,7 @@ public class MainMenu {
                 try{
                     String[] splited = userInput.split(" ");
                     String keyword = splited[0].toLowerCase(); // ignore mayus, always lowerCase
-                    switch (keyword){
+                    switch (keyword) {
                         case "signup":
                             Lead lead = utils.signingUp();
                             leadRepository.save(lead);
@@ -67,10 +67,10 @@ public class MainMenu {
                             try {
                                 String objectType = splited[1];
                                 id = Integer.parseInt(splited[2]);
-                                switch (objectType){
+                                switch (objectType) {
                                     case "leads":
                                         optionalLead = leadRepository.findById(id);
-                                        if(optionalLead.isPresent()){
+                                        if (optionalLead.isPresent()) {
                                             System.out.println(optionalLead.get());
                                         } else {
                                             System.out.println("Not found opportunity");
@@ -78,29 +78,31 @@ public class MainMenu {
                                         break;
                                     case "opportunities":
                                         optionalOpportunity = opportunityRepository.findById(id);
-                                        if(optionalOpportunity.isPresent()){
+                                        if (optionalOpportunity.isPresent()) {
                                             System.out.println(optionalOpportunity.get());
                                         } else {
                                             System.out.println("Not found opportunity");
-                                        } break;
+                                        }
+                                        break;
                                     default:
-                                        System.out.println("Invalid option. Lookup does not have "+objectType+" option, " +
+                                        System.out.println("Invalid option. Lookup does not have " + objectType + " option, " +
                                                 "please try again. With \033[3mLookup leads {lead_id}\033[0m " +
                                                 "or \033[3mLookup opportunities{opportunity_id}\033[0m");
                                         break;
                                 }
-                            } catch (ArrayIndexOutOfBoundsException e){
+                            } catch (ArrayIndexOutOfBoundsException e) {
                                 System.out.println("Invalid option. Please try again with \033[3mLookup leads {lead_id}\033[0m " +
                                         "or \033[3mLookup opportunities{opportunity_id}\033[0m");
-                            } break;
+                            }
+                            break;
                         case "show":
                             String objectType = splited[1];
                             if (objectType.equals("leads")) {
                                 utils.showLead();
                             } else if (objectType.equals("opportunities")) {
                                 utils.showOpportunities();
-                            } else{
-                                System.out.println("Invalid option. Show does not have "+objectType+" option, please " +
+                            } else {
+                                System.out.println("Invalid option. Show does not have " + objectType + " option, please " +
                                         "try again. With \033[3mshow leads\033[0m or \033[3mshow opportunities\033[0m");
                                 break;
                             }
@@ -108,7 +110,7 @@ public class MainMenu {
                         case "close-lost":
                             id = Integer.parseInt(splited[1]);
                             optionalOpportunity = opportunityRepository.findById(id);
-                            if(optionalOpportunity.isPresent()){
+                            if (optionalOpportunity.isPresent()) {
                                 optionalOpportunity.get().setStatus(StatusEnum.CLOSED_LOST);
                                 System.out.println("The opportunity with id " + id + " was closed-lost.");
                             } else {
@@ -118,7 +120,7 @@ public class MainMenu {
                         case "close-won":
                             id = Integer.parseInt(splited[1]);
                             optionalOpportunity = opportunityRepository.findById(id);
-                            if(optionalOpportunity.isPresent()){
+                            if (optionalOpportunity.isPresent()) {
                                 optionalOpportunity.get().setStatus(StatusEnum.CLOSED_WON);
                                 System.out.println("The opportunity with id " + id + " was closed-won");
                             } else {
@@ -127,45 +129,160 @@ public class MainMenu {
                             break;
                         case "report":
                             List<SalesRep> salesReps;
-                            String objectReport =splited[1];
-                            switch (objectReport){
+                            String objectReport = splited[1];
+                            switch (objectReport) {
                                 case "lead":
                                     salesReps = salesRepRepository.findAll();
-                                    for(SalesRep salesRep: salesReps){
+                                    for (SalesRep salesRep : salesReps) {
                                         System.out.println(salesRep.getName());
                                         System.out.println(leadRepository.findBySalesRep(salesRep).size());
                                     }
                                     break;
                                 case "opportunity":
                                     String objectReport2 = splited[3];
-                                    switch (objectReport2){
+                                    switch (objectReport2) {
                                         case "salesrep":
-                                            salesReps = salesRepRepository.findAll();
-                                            for(SalesRep salesRep: salesReps){
-                                                System.out.println(salesRep.getName());
-                                                System.out.println(opportunityRepository.findBySalesRepAssociate().size());
-                                            }
+                                            utils.showObjectList(opportunityRepository.findBySalesRepAssociate());
                                             break;
                                         case "the":
-                                            if(splited[4].equals("product")){
-                                                for(ProductEnum productEnum: ProductEnum.values()){
-                                                    System.out.println(productEnum);
-                                                    System.out.println(opportunityRepository.findByProductEnum());
-                                                }
+                                            if (splited[4].equals("product")) {
+                                                utils.showObjectList(opportunityRepository.findByProductEnum());
                                             } else {
                                                 System.out.println("Invalid option. Please try again");
-                                            } break;
+                                            }
+                                            break;
                                         case "country":
-                                            //List<String> countries = opportunityRepository.findBy
-
+                                            utils.showObjectList(opportunityRepository.findByCountry());
                                             break;
                                         case "city":
+                                            utils.showObjectList(opportunityRepository.findByCity());
                                             break;
                                         case "industry":
+                                            utils.showObjectList(opportunityRepository.findByIndustryEnum());
                                             break;
                                     }
-
+                                    break;
+                                case "closed-won", "closed_won":
+                                    String objectReport3 = splited[3];
+                                    switch (objectReport3) {
+                                        case "salesrep":
+                                            utils.showObjectList(salesRepRepository.findByStatusCloseWon());
+                                            break;
+                                        case "the":
+                                            if (splited[4].equals("product")) {
+                                                utils.showObjectList(opportunityRepository.findByProductEnumAndStatus(StatusEnum.CLOSED_WON));
+                                            } else {
+                                                System.out.println("Invalid option. Please try again");
+                                            }
+                                            break;
+                                        case "country":
+                                            utils.showObjectList(accountRepository.findByCountryAndStatus("CLOSED_WON"));
+                                            break;
+                                        case "city":
+                                            utils.showObjectList(accountRepository.findByCityAndStatus("CLOSED_WON"));
+                                            break;
+                                        case "industry":
+                                            utils.showObjectList(accountRepository.findByIndustryAndStatus("CLOSED_WON"));
+                                            break;
+                                    }
+                                    break;
+                                case "closed-lost", "closed_lost":
+                                    String objectReport4 = splited[3];
+                                    switch (objectReport4) {
+                                        case "salesrep":
+                                            utils.showObjectList(salesRepRepository.findByStatusCloseLost());
+                                            break;
+                                        case "the":
+                                            if (splited[4].equals("product")) {
+                                                utils.showObjectList(opportunityRepository.findByProductEnumAndStatus(StatusEnum.CLOSED_LOST));
+                                            } else {
+                                                System.out.println("Invalid option. Please try again");
+                                            }
+                                            break;
+                                        case "country":
+                                            utils.showObjectList(accountRepository.findByCountryAndStatus("CLOSED_LOST"));
+                                            break;
+                                        case "city":
+                                            utils.showObjectList(accountRepository.findByCityAndStatus("CLOSED_LOST"));
+                                            break;
+                                        case "industry":
+                                            utils.showObjectList(accountRepository.findByIndustryAndStatus("CLOSED_LOST"));
+                                            break;
+                                    }
+                                    break;
+                                case "open":
+                                    String objectReport5 = splited[3];
+                                    switch (objectReport5) {
+                                        case "salesrep":
+                                            utils.showObjectList(salesRepRepository.findByStatusOpen());
+                                            break;
+                                        case "the":
+                                            if (splited[4].equals("product")) {
+                                                utils.showObjectList(opportunityRepository.findByProductEnumAndStatus(StatusEnum.OPEN));
+                                            } else {
+                                                System.out.println("Invalid option. Please try again");
+                                            }
+                                            break;
+                                        case "country":
+                                            utils.showObjectList(accountRepository.findByCountryAndStatus("OPEN"));
+                                            break;
+                                        case "city":
+                                            utils.showObjectList(accountRepository.findByCityAndStatus("OPEN"));
+                                            break;
+                                        case "industry":
+                                            utils.showObjectList(accountRepository.findByIndustryAndStatus("OPEN"));
+                                            break;
+                                    }
+                                    break;
                             }
+                            break;
+
+                        case "mean":
+                            String objectMean = splited[1];
+                            switch (objectMean){
+
+                                case "employeecount":
+                                    System.out.println("The employees's mean is: "+ accountRepository.findEmployeeAverage());
+                                break;
+                                case "quantity":
+                                    System.out.println("The quantity's mean is: "+ opportunityRepository.findQuantityAverage());
+                                    break;
+                                case "opps":
+                                    //System.out.println("The quantity's mean is: "+ opportunityRepository);
+                                    break;
+                            }
+                            break;
+
+                        case "max":
+                            String objectMax = splited[1];
+                            switch (objectMax){
+
+                                case "employeecount":
+                                    System.out.println("The employees's max is: "+ accountRepository.findEmployeeMax());
+                                    break;
+                                case "quantity":
+                                    System.out.println("The quantity's max is: "+ opportunityRepository.findQuantityMax());
+                                    break;
+                                case "opps":
+                                    //System.out.println("The quantity's max is: "+ opportunityRepository);
+                                    break;
+                            }
+                            break;
+                        case "min":
+                            String objectMin = splited[1];
+                            switch (objectMin){
+
+                                case "employeecount":
+                                    System.out.println("The employees's min is: "+ accountRepository.findEmployeeMin());
+                                    break;
+                                case "quantity":
+                                    System.out.println("The quantity's min is: "+ opportunityRepository.findQuantityMin());
+                                    break;
+                                case "opps":
+                                    //System.out.println("The quantity's min is: "+ opportunityRepository);
+                                    break;
+                            }
+                            break;
 
                         case "exit":
                             System.exit(0);
