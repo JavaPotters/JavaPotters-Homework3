@@ -2,9 +2,9 @@ DROP SCHEMA IF EXISTS homework_3_demo;
 CREATE SCHEMA homework_3_demo;
 USE homework_3_demo;
 
-DROP SCHEMA IF EXISTS homework_3_demo_test;
-CREATE SCHEMA homework_3_demo_test;
-USE homework_3_demo_test;
+-- DROP SCHEMA IF EXISTS homework_3_demo_test;
+-- CREATE SCHEMA homework_3_demo_test;
+--  USE homework_3_demo_test;
 
 DROP TABLE IF EXISTS sales_rep;
 CREATE TABLE sales_rep(
@@ -13,31 +13,28 @@ name VARCHAR(255),
 PRIMARY KEY(id)
 );
 
-DROP TABLE IF EXISTS contact;
-CREATE TABLE contact(
-id INT NOT NULL AUTO_INCREMENT,
-PRIMARY KEY(id)
-);
-
 DROP TABLE IF EXISTS lead_table;
 CREATE TABLE lead_table(
 id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(255),
-phone_number BIGINT,
+phone_number INT,
 email VARCHAR(255),
 company_name VARCHAR(255),
-PRIMARY KEY(id)
+sales_rep_id INT,
+PRIMARY KEY(id),
+FOREIGN KEY(sales_rep_id) REFERENCES sales_rep(id)
 );
 
-DROP TABLE IF EXISTS opportunity;
-CREATE TABLE opportunity(
+DROP TABLE IF EXISTS contact;
+CREATE TABLE contact(
 id INT NOT NULL AUTO_INCREMENT,
-product_enum VARCHAR(255),
-quantity INT,
-status_enum VARCHAR(255),
-decision_maker_id INT,
+name VARCHAR(255),
+phone_number INT,
+email VARCHAR(255),
+company_name VARCHAR(255),
+sales_rep_id INT,
 PRIMARY KEY(id),
-FOREIGN KEY(decision_maker_id) REFERENCES contact(id)
+FOREIGN KEY(sales_rep_id) REFERENCES sales_rep(id)
 );
 
 DROP TABLE IF EXISTS account;
@@ -49,6 +46,21 @@ employee_account INT,
 city VARCHAR(255),
 country VARCHAR(255),
 PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS opportunity;
+CREATE TABLE opportunity(
+id INT NOT NULL AUTO_INCREMENT,
+product_enum VARCHAR(255),
+quantity INT,
+status_enum VARCHAR(255),
+decision_maker_id INT,
+account_id INT,
+sales_rep_id INT,
+PRIMARY KEY(id),
+FOREIGN KEY(decision_maker_id) REFERENCES contact(id),
+FOREIGN KEY(account_id) REFERENCES account(id),
+FOREIGN KEY(sales_rep_id) REFERENCES sales_rep(id)
 );
 
 INSERT INTO sales_rep (name) VALUES
@@ -68,3 +80,5 @@ INSERT INTO account (company_name, industry_enum, employee_account, city, countr
 ('Desatranques Jaen', 'OTHER', '50', 'Jaen', 'Spain'),
 ('Tiempost', 'OTHER', '205', 'Montevideo', 'Uruguay'),
 ('Seur', 'OTHER', '500', 'Madrid', 'Spain');
+
+SELECT country FROM account
