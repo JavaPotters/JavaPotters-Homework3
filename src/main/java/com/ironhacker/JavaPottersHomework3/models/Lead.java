@@ -22,6 +22,14 @@ public class Lead {
     public Lead() {
     }
 
+    public Lead(String name, int phoneNumber, String email, String companyName, SalesRep salesRep) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.companyName = companyName;
+        this.salesRep = salesRep;
+    }
+
     public Lead(String name, int phoneNumber, String email, String companyName) {
         this.name = name;
         this.phoneNumber = phoneNumber;

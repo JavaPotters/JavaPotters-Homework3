@@ -133,7 +133,7 @@ public class MainMenu {
                                     salesReps = salesRepRepository.findAll();
                                     for(SalesRep salesRep: salesReps){
                                         System.out.println(salesRep.getName());
-                                        System.out.println(leadRepository.findBySalesRep(salesRep.getId()).size());
+                                        System.out.println(leadRepository.findBySalesRep(salesRep).size());
                                     }
                                     break;
                                 case "opportunity":
@@ -143,14 +143,14 @@ public class MainMenu {
                                             salesReps = salesRepRepository.findAll();
                                             for(SalesRep salesRep: salesReps){
                                                 System.out.println(salesRep.getName());
-                                                System.out.println(opportunityRepository.findBySalesRepAssociate(salesRep).size());
+                                                System.out.println(opportunityRepository.findBySalesRepAssociate().size());
                                             }
                                             break;
                                         case "the":
                                             if(splited[4].equals("product")){
                                                 for(ProductEnum productEnum: ProductEnum.values()){
                                                     System.out.println(productEnum);
-                                                    System.out.println(opportunityRepository.findByProductEnum(productEnum));
+                                                    System.out.println(opportunityRepository.findByProductEnum());
                                                 }
                                             } else {
                                                 System.out.println("Invalid option. Please try again");

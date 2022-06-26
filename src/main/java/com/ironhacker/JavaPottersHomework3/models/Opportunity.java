@@ -2,6 +2,7 @@ package com.ironhacker.JavaPottersHomework3.models;
 
 import com.ironhacker.JavaPottersHomework3.enums.ProductEnum;
 import com.ironhacker.JavaPottersHomework3.enums.StatusEnum;
+import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -29,6 +30,15 @@ public class Opportunity {
     private Account account;
 
     public Opportunity() {
+    }
+
+    public Opportunity(ProductEnum productEnum, int quantity, Contact decisionMaker, StatusEnum statusEnum, SalesRep salesRepAssociate, Account account) {
+        this.productEnum = productEnum;
+        this.quantity = quantity;
+        this.decisionMaker = decisionMaker;
+        this.statusEnum = statusEnum;
+        this.salesRepAssociate = salesRepAssociate;
+        this.account = account;
     }
 
     public Opportunity(ProductEnum productEnum, int quantity, Contact decisionMaker, StatusEnum statusEnum) {
@@ -80,19 +90,19 @@ public class Opportunity {
                 '}';
     }
 
+    public void setStatus(StatusEnum closedLost) {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Opportunity that = (Opportunity) o;
-        return id == that.id && quantity == that.quantity && productEnum == that.productEnum && statusEnum == that.statusEnum;
+        return id == that.id && quantity == that.quantity && productEnum == that.productEnum && Objects.equals(decisionMaker, that.decisionMaker) && statusEnum == that.statusEnum && Objects.equals(salesRepAssociate, that.salesRepAssociate) && Objects.equals(account, that.account);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productEnum, quantity, statusEnum);
-    }
-
-    public void setStatus(StatusEnum closedLost) {
+        return Objects.hash(id, productEnum, quantity, decisionMaker, statusEnum, salesRepAssociate, account);
     }
 }
