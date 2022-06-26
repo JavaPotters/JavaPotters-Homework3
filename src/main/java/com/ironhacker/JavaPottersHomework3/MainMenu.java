@@ -30,9 +30,16 @@ public class MainMenu {
     @Autowired
     private ContactRepository contactRepository;
 
-    @Autowired
+
     private Utils utils;
 
+    public MainMenu() {
+       utils= new Utils();
+
+
+       main();
+
+    }
 
     public void main() {
 
