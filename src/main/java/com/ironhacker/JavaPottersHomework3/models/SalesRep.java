@@ -2,6 +2,7 @@ package com.ironhacker.JavaPottersHomework3.models;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class SalesRep {
@@ -37,5 +38,18 @@ public class SalesRep {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SalesRep salesRep = (SalesRep) o;
+        return Objects.equals(name, salesRep.name) && Objects.equals(leadList, salesRep.leadList) && Objects.equals(opportunityList, salesRep.opportunityList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, leadList, opportunityList);
     }
 }

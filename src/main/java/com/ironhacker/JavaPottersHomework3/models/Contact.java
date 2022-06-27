@@ -4,10 +4,15 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Contact extends Lead {
+public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private String name;
+    private Integer phoneNumber;
+    private String email;
+    private String companyName;
 
     @OneToOne(mappedBy = "decisionMaker")
     private Opportunity opportunity;
@@ -17,7 +22,50 @@ public class Contact extends Lead {
 
 
     public Contact(String name, int phoneNumber, String email, String companyName) {
-        super(name, phoneNumber, email, companyName);
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.companyName = companyName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(Integer phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public Opportunity getOpportunity() {

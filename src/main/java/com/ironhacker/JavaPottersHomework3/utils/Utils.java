@@ -5,14 +5,12 @@ import com.ironhacker.JavaPottersHomework3.models.Opportunity;
 import com.ironhacker.JavaPottersHomework3.repository.LeadRepository;
 import com.ironhacker.JavaPottersHomework3.repository.OpportunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.ironhacker.JavaPottersHomework3.utils.Constants.keyWords;
-
+@Service
 public class Utils {
     // read questions, and return a list of strings
     public List<String> getInputData(String... questions) {
@@ -70,7 +68,8 @@ public class Utils {
     public void showLead(){
         System.out.println("List of leads: ");
         List<Lead> leadList = leadRepository.findAll();
-        for(Lead lead: leadList){
+        Set<Lead> leads = new HashSet<>(leadList);
+        for(Lead lead: leads){
             System.out.println(lead);
         }
     }
@@ -81,7 +80,8 @@ public class Utils {
     public void showOpportunities(){
         System.out.println("List of opportunities: ");
         List<Opportunity> opportunityList = opportunityRepository.findAll();
-        for(Opportunity opportunity: opportunityList){
+        Set<Opportunity> opportunities = new HashSet<>(opportunityList);
+        for(Opportunity opportunity: opportunities){
             System.out.println(opportunity);
         }
     }

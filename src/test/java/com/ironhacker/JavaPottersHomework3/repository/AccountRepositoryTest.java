@@ -50,8 +50,6 @@ class AccountRepositoryTest {
         account2 = new Account("Tiempost", IndustryEnum.OTHER, 205, "Montevideo", "Uruguay");
         opportunity2 = new Opportunity(ProductEnum.FLATBED, 15, contact2, StatusEnum.OPEN, salesRep2, account2);
 
-
-
         salesRepRepository.saveAll(List.of(salesRep1, salesRep2));
         contactRepository.saveAll(List.of(contact1, contact2));
         accountRepository.saveAll(List.of(account1,account2));

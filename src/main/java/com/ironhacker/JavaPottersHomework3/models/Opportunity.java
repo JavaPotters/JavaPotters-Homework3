@@ -98,11 +98,11 @@ public class Opportunity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Opportunity that = (Opportunity) o;
-        return id == that.id && quantity == that.quantity && productEnum == that.productEnum && Objects.equals(decisionMaker, that.decisionMaker) && statusEnum == that.statusEnum && Objects.equals(salesRepAssociate, that.salesRepAssociate) && Objects.equals(account, that.account);
+        return quantity == that.quantity && productEnum == that.productEnum && Objects.equals(decisionMaker, that.decisionMaker) && statusEnum == that.statusEnum && Objects.equals(salesRepAssociate, that.salesRepAssociate) && Objects.equals(account, that.account);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productEnum, quantity, decisionMaker, statusEnum, salesRepAssociate, account);
+        return Objects.hash(productEnum, quantity, decisionMaker, statusEnum, salesRepAssociate, account);
     }
 }

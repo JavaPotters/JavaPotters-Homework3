@@ -4,6 +4,7 @@ import com.ironhacker.JavaPottersHomework3.enums.IndustryEnum;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Account {
@@ -80,5 +81,18 @@ public class Account {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return employeeAccount == account.employeeAccount && Objects.equals(companyName, account.companyName) && industryEnum == account.industryEnum && Objects.equals(city, account.city) && Objects.equals(country, account.country) && Objects.equals(opportunityList, account.opportunityList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(companyName, industryEnum, employeeAccount, city, country, opportunityList);
     }
 }

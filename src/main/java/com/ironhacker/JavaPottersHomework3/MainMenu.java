@@ -7,6 +7,8 @@ import com.ironhacker.JavaPottersHomework3.models.*;
 import com.ironhacker.JavaPottersHomework3.repository.*;
 import com.ironhacker.JavaPottersHomework3.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,33 +17,51 @@ import java.util.Scanner;
 import static com.ironhacker.JavaPottersHomework3.utils.Utils.*;
 import static com.ironhacker.JavaPottersHomework3.utils.Constants.*;
 
+@Service
 public class MainMenu {
     @Autowired
     private LeadRepository leadRepository;
-
     @Autowired
     private OpportunityRepository opportunityRepository;
-
     @Autowired
     private AccountRepository accountRepository;
-
     @Autowired
     private SalesRepRepository salesRepRepository;
     @Autowired
     private ContactRepository contactRepository;
 
+    private Lead lead1, lead2;
+    private Contact contact1, contact2;
+    private Opportunity opportunity1, opportunity2;
+    private Account account1, account2;
+    private SalesRep salesRep1, salesRep2;
 
+    @Autowired
     private Utils utils;
 
-    public MainMenu() {
-       utils= new Utils();
-
-
-       main();
-
-    }
 
     public void main() {
+
+        salesRep1 = new SalesRep("Laura");
+        contact1 = new Contact("Carlos",  660142356, "carlos@email.com", "Desatranques Jaen");
+        account1 = new Account("Desatranques Jaen", IndustryEnum.OTHER, 50, "Jaen", "Spain");
+        opportunity1 = new Opportunity(ProductEnum.BOX, 20, contact1, StatusEnum.OPEN, salesRep1, account1);
+        lead1 = new Lead("Carlos",  660142356, "carlos@email.com", "Desatranques Jaen", salesRep1);
+
+        salesRep2 = new SalesRep("Ana");
+        contact2 = new Contact("Mike", 634477579, "mike@email.com", "Tiempost");
+        account2 = new Account("Tiempost", IndustryEnum.OTHER, 205, "Montevideo", "Uruguay");
+        opportunity2 = new Opportunity(ProductEnum.FLATBED, 15, contact2, StatusEnum.OPEN, salesRep2, account2);
+        lead2 = new Lead("Mike", 634477579, "mike@email.com", "Tiempost", salesRep2);
+
+        salesRepRepository.saveAll(List.of(salesRep1, salesRep2));
+        leadRepository.saveAll(List.of(lead1, lead2));
+        contactRepository.saveAll(List.of(contact1, contact2));
+        accountRepository.saveAll(List.of(account1,account2));
+        opportunityRepository.saveAll(List.of(opportunity1,opportunity2));
+
+
+
 
         //Create a Scanner to collect user input
         Scanner myScanner = new Scanner(System.in);
@@ -348,11 +368,11 @@ public class MainMenu {
                 contact, StatusEnum.OPEN);
         opportunityRepository.save(opportunity);
         String userInput;
-        do{
+
             System.out.println("Would you like to create a new Account? (Y/N)");
             userInput = myScanner.nextLine();
 
-            if (userInput.equals("Y")) {
+            if (userInput.toLowerCase().equals("y")) {
 
                 int industryTypeInt;
                 IndustryEnum industryEnum = null;
@@ -395,7 +415,7 @@ public class MainMenu {
                 accountRepository.save(account);
 
             }
-            else if (userInput.equals("N")) {
+            else if (userInput.toLowerCase().equals("n")) {
                 while (true){
                     // preguntar id de account
                     int accountId = utils.validInput("\nPlease insert account ID");
@@ -410,7 +430,6 @@ public class MainMenu {
             } else {
                 System.out.println("Invalid option");
             }
-        } while (userInput!="Y" && userInput!="N");
 
         leadRepository.delete(optionalLead.get());
         System.out.println("Convert done");

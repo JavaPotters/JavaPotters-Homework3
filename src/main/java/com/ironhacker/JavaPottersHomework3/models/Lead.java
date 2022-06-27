@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "lead_table")
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Inheritance(strategy = InheritanceType.JOINED)
 public class Lead {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,11 +93,11 @@ public class Lead {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lead lead = (Lead) o;
-        return id == lead.id && phoneNumber == lead.phoneNumber && Objects.equals(name, lead.name) && Objects.equals(email, lead.email) && Objects.equals(companyName, lead.companyName);
+        return  phoneNumber == lead.phoneNumber && Objects.equals(name, lead.name) && Objects.equals(email, lead.email) && Objects.equals(companyName, lead.companyName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, phoneNumber, email, companyName);
+        return Objects.hash( name, phoneNumber, email, companyName);
     }
 }
