@@ -19,7 +19,7 @@ public class JavaPottersHomework3Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Hello world");
+		// System.out.println("Hello world");
 		mainMenu.main();
 	}
 }
