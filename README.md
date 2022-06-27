@@ -17,6 +17,8 @@ En este proyecto realizamos un simulador de un CRM para una empresa ficticia, y,
 
 ### ¿Cómo usarlo?
 
+El programa está listo actualmente para comprobar primero los tests si quieres probar la aplicación, debes descomentar la línea 22 de la clase principal `JavaPottersApplications`. 
+
 Al compilar nuestro programa podrás acceder a un CRM interno ficticio que pretende simular las diferentes opciones que podría realizar un asistente comercial dentro de la empresa. 
 De esta forma por consola se nos pregunta qué funcionalidad queremos ejecutar, a elegir entre: 
 -Registrar un lead 
@@ -71,6 +73,7 @@ Hemos incluido en este proyecto de java la parte de test y excepciones.
 En los repositorios `AccountRepositoryTest`, `LeadReposotory`, `ContactRepository`, `OpportunityRepository`, `SalesRepRepository` hemos incluido los métodos correspondientes a cada modelo. 
 Hemos realizado el 100% de test de todos los repositorios. 
 Para lanzar excepciones hemos usado `try...catch` y las excepciones `ArrayIndexOutOfBoundsException` `InputMismatchException` .
+
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
